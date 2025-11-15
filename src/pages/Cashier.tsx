@@ -204,9 +204,9 @@ const Cashier = () => {
           body {
             font-family: 'Courier New', monospace;
             font-size: 9px;
-            width: 52mm;
-            margin: 0 auto;
-            padding: 1mm 1mm;
+            width: 48mm; /* safe printable width for POS-58 */
+            margin: 0;    /* align hard-left */
+            padding: 0.5mm 0 0.5mm 0; /* minimal padding */
           }
           .center { text-align: center; }
           .bold { font-weight: bold; }
@@ -214,28 +214,21 @@ const Cashier = () => {
           .item { margin: 1px 0; }
           .item-name { 
             margin-bottom: 1px;
-            word-wrap: break-word;
+            word-break: break-word;
           }
-          .item-detail { 
+          .row { 
             display: flex; 
+            align-items: baseline;
             justify-content: space-between;
-            font-size: 8px;
             gap: 2px;
           }
-          .item-detail span:last-child {
-            text-align: right;
-            min-width: 45px;
+          .label { flex: 1 1 auto; min-width: 0; }
+          .amount { 
+            flex: 0 0 auto; 
+            text-align: right; 
+            white-space: nowrap; 
           }
-          .summary { 
-            display: flex; 
-            justify-content: space-between;
-            margin: 1px 0;
-            font-size: 9px;
-          }
-          .summary span:last-child {
-            text-align: right;
-            min-width: 50px;
-          }
+          .summary { margin: 1px 0; }
         </style>
       </head>
       <body>
@@ -256,26 +249,26 @@ const Cashier = () => {
             (item) => `
         <div class="item">
           <div class="item-name">${item.displayName}</div>
-          <div class="item-detail">
-            <span>${item.quantity}x ${item.displayPrice.toLocaleString("id-ID")}</span>
-            <span>${(item.displayPrice * item.quantity).toLocaleString("id-ID")}</span>
+          <div class="row">
+            <span class="label">${item.quantity}x ${item.displayPrice.toLocaleString("id-ID")}</span>
+            <span class="amount">${(item.displayPrice * item.quantity).toLocaleString("id-ID")}</span>
           </div>
         </div>
         `
           )
           .join("")}
         <div class="line"></div>
-        <div class="summary bold">
-          <span>TOTAL:</span>
-          <span>${totalAmount.toLocaleString("id-ID")}</span>
+        <div class="row bold summary">
+          <span class="label">TOTAL:</span>
+          <span class="amount">${totalAmount.toLocaleString("id-ID")}</span>
         </div>
-        <div class="summary">
-          <span>Bayar:</span>
-          <span>${payment.toLocaleString("id-ID")}</span>
+        <div class="row summary">
+          <span class="label">Bayar:</span>
+          <span class="amount">${payment.toLocaleString("id-ID")}</span>
         </div>
-        <div class="summary">
-          <span>Kembalian:</span>
-          <span>${change.toLocaleString("id-ID")}</span>
+        <div class="row summary">
+          <span class="label">Kembalian:</span>
+          <span class="amount">${change.toLocaleString("id-ID")}</span>
         </div>
         <div class="line"></div>
         <div class="center">Terima Kasih</div>
