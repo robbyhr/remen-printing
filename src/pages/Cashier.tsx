@@ -200,28 +200,41 @@ const Cashier = () => {
         <title>Struk</title>
         <style>
           @page { size: 58mm auto; margin: 0; }
+          * { margin: 0; padding: 0; box-sizing: border-box; }
           body {
             font-family: 'Courier New', monospace;
-            font-size: 10px;
-            width: 54mm;
-            margin: 0;
-            padding: 2mm;
-            box-sizing: border-box;
+            font-size: 9px;
+            width: 52mm;
+            margin: 0 auto;
+            padding: 1mm 1mm;
           }
           .center { text-align: center; }
           .bold { font-weight: bold; }
           .line { border-top: 1px dashed #000; margin: 2px 0; }
-          .item { margin: 2px 0; }
-          .item-name { margin-bottom: 1px; }
+          .item { margin: 1px 0; }
+          .item-name { 
+            margin-bottom: 1px;
+            word-wrap: break-word;
+          }
           .item-detail { 
             display: flex; 
             justify-content: space-between;
-            font-size: 9px;
+            font-size: 8px;
+            gap: 2px;
+          }
+          .item-detail span:last-child {
+            text-align: right;
+            min-width: 45px;
           }
           .summary { 
             display: flex; 
             justify-content: space-between;
             margin: 1px 0;
+            font-size: 9px;
+          }
+          .summary span:last-child {
+            text-align: right;
+            min-width: 50px;
           }
         </style>
       </head>
@@ -230,7 +243,13 @@ const Cashier = () => {
         <div class="center">Struk Pembelian</div>
         <div class="line"></div>
         <div>ID: ${transactionId.substring(0, 8)}</div>
-        <div>${new Date().toLocaleString("id-ID")}</div>
+        <div>${new Date().toLocaleString("id-ID", { 
+          day: '2-digit', 
+          month: '2-digit', 
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })}</div>
         <div class="line"></div>
         ${cart
           .map(
@@ -238,7 +257,7 @@ const Cashier = () => {
         <div class="item">
           <div class="item-name">${item.displayName}</div>
           <div class="item-detail">
-            <span>${item.quantity} x ${item.displayPrice.toLocaleString("id-ID")}</span>
+            <span>${item.quantity}x ${item.displayPrice.toLocaleString("id-ID")}</span>
             <span>${(item.displayPrice * item.quantity).toLocaleString("id-ID")}</span>
           </div>
         </div>
@@ -248,15 +267,15 @@ const Cashier = () => {
         <div class="line"></div>
         <div class="summary bold">
           <span>TOTAL:</span>
-          <span>Rp ${totalAmount.toLocaleString("id-ID")}</span>
+          <span>${totalAmount.toLocaleString("id-ID")}</span>
         </div>
         <div class="summary">
           <span>Bayar:</span>
-          <span>Rp ${payment.toLocaleString("id-ID")}</span>
+          <span>${payment.toLocaleString("id-ID")}</span>
         </div>
         <div class="summary">
           <span>Kembalian:</span>
-          <span>Rp ${change.toLocaleString("id-ID")}</span>
+          <span>${change.toLocaleString("id-ID")}</span>
         </div>
         <div class="line"></div>
         <div class="center">Terima Kasih</div>
