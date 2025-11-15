@@ -202,17 +202,27 @@ const Cashier = () => {
           @page { size: 58mm auto; margin: 0; }
           body {
             font-family: 'Courier New', monospace;
-            font-size: 11px;
-            width: 58mm;
+            font-size: 10px;
+            width: 54mm;
             margin: 0;
             padding: 2mm;
+            box-sizing: border-box;
           }
           .center { text-align: center; }
           .bold { font-weight: bold; }
-          .line { border-top: 1px dashed #000; margin: 3px 0; }
-          table { width: 100%; border-collapse: collapse; }
-          td { padding: 1px 0; }
-          .right { text-align: right; }
+          .line { border-top: 1px dashed #000; margin: 2px 0; }
+          .item { margin: 2px 0; }
+          .item-name { margin-bottom: 1px; }
+          .item-detail { 
+            display: flex; 
+            justify-content: space-between;
+            font-size: 9px;
+          }
+          .summary { 
+            display: flex; 
+            justify-content: space-between;
+            margin: 1px 0;
+          }
         </style>
       </head>
       <body>
@@ -222,37 +232,32 @@ const Cashier = () => {
         <div>ID: ${transactionId.substring(0, 8)}</div>
         <div>${new Date().toLocaleString("id-ID")}</div>
         <div class="line"></div>
-        <table>
-          ${cart
-            .map(
-              (item) => `
-            <tr>
-              <td colspan="3">${item.displayName}</td>
-            </tr>
-            <tr>
-              <td>${item.quantity}x</td>
-              <td class="right">${item.displayPrice.toLocaleString("id-ID")}</td>
-              <td class="right">${(item.displayPrice * item.quantity).toLocaleString("id-ID")}</td>
-            </tr>
-          `
-            )
-            .join("")}
-        </table>
+        ${cart
+          .map(
+            (item) => `
+        <div class="item">
+          <div class="item-name">${item.displayName}</div>
+          <div class="item-detail">
+            <span>${item.quantity} x ${item.displayPrice.toLocaleString("id-ID")}</span>
+            <span>${(item.displayPrice * item.quantity).toLocaleString("id-ID")}</span>
+          </div>
+        </div>
+        `
+          )
+          .join("")}
         <div class="line"></div>
-        <table>
-          <tr class="bold">
-            <td>TOTAL:</td>
-            <td class="right">Rp ${totalAmount.toLocaleString("id-ID")}</td>
-          </tr>
-          <tr>
-            <td>Bayar:</td>
-            <td class="right">Rp ${payment.toLocaleString("id-ID")}</td>
-          </tr>
-          <tr>
-            <td>Kembalian:</td>
-            <td class="right">Rp ${change.toLocaleString("id-ID")}</td>
-          </tr>
-        </table>
+        <div class="summary bold">
+          <span>TOTAL:</span>
+          <span>Rp ${totalAmount.toLocaleString("id-ID")}</span>
+        </div>
+        <div class="summary">
+          <span>Bayar:</span>
+          <span>Rp ${payment.toLocaleString("id-ID")}</span>
+        </div>
+        <div class="summary">
+          <span>Kembalian:</span>
+          <span>Rp ${change.toLocaleString("id-ID")}</span>
+        </div>
         <div class="line"></div>
         <div class="center">Terima Kasih</div>
         <div class="center">Selamat Datang Kembali</div>
