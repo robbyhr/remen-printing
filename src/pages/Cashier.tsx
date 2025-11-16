@@ -281,6 +281,7 @@ const Cashier = () => {
     </div>
 
         <div></div>
+        <div style="height: 15px;"></div>
         <div class="center">Terima Kasih</div>
         <div class="center">Selamat Datang Kembali</div>
         <script>
