@@ -274,6 +274,9 @@ const Cashier = () => {
         <div class="line"></div>
         <div class="center">Terima Kasih</div>
         <div class="center">Selamat Datang Kembali</div>
+        <div>*Garansi ATK 1x24 Jam setelah barang diterima</div>
+        <div>*Garansi Cetak 7x24 Jam setelah barang diterima</div>
+        <div>*Anda dapat menukar kembali barang jika tidak sesuai/rusak</div>
         <script>
           window.onload = function() {
             window.print();
