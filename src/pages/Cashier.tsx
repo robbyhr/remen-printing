@@ -273,12 +273,15 @@ const Cashier = () => {
         </div>
         <div class="line"></div>
         
+    <div style="font-style: italic;">KETENTUAN</div>
     <div style="font-size: 6px;">
-      <div class="center bold">KETENTUAN</div>
-      <div>Garansi ATK 1x24 Jam</div>
-      <div>Garansi Cetak 7x24 Jam</div>
-      <div>Barang rusak dapat ditukar sesuai ketentuan</div>
+      <div>• Garansi ATK 1x24 Jam</div>
+      <div>• Garansi Cetak 3x24 Jam</div>
+      <div>• Barang dapat ditukar selama garansi</div>
+      <div>• Barang tidak dapat dikembalikan</div>
+      <div>• Bawa Struk ini saat Penukaran</div>
     </div>
+    <div class="line"></div>
 
         <div></div>
         <div style="height: 10px;"></div>
