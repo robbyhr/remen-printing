@@ -232,8 +232,9 @@ const Cashier = () => {
         </style>
       </head>
       <body>
-        <div class="center bold">PERCETAKAN & ATK</div>
-        <div class="center">Struk Pembelian</div>
+        <div class="center bold">REMEN PRINTING</div>
+        <div class="center">Telp 082158103363</div>
+        <div class="center">Jl. Poros Kota Bangun III</div>
         <div class="line"></div>
         <div>ID: ${transactionId.substring(0, 8)}</div>
         <div>${new Date().toLocaleString("id-ID", { 
