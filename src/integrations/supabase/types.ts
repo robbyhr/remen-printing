@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      printing_orders: {
+        Row: {
+          created_at: string
+          customer_name: string
+          id: string
+          is_completed: boolean
+          is_paid: boolean
+          order_name: string
+          phone_number: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_name: string
+          id?: string
+          is_completed?: boolean
+          is_paid?: boolean
+          order_name: string
+          phone_number: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string
+          id?: string
+          is_completed?: boolean
+          is_paid?: boolean
+          order_name?: string
+          phone_number?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           code: string
