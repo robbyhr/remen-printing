@@ -17,7 +17,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <h1 className="text-xl font-bold text-primary">
-              POS Percetakan & ATK
+              Remen Printing
             </h1>
             <nav className="flex gap-1">
               {navItems.map((item) => {
