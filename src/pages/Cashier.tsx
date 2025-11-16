@@ -289,33 +289,42 @@ const Cashier = () => {
   };
 
   return (
-    <div className="grid gap-4 lg:grid-cols-3">
-      <div className="lg:col-span-2 space-y-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Cari Produk</CardTitle>
-          </CardHeader>
-          <CardContent>
+    <div className="h-[calc(100vh-5rem)] flex flex-col lg:flex-row gap-4">
+      {/* Left Side - Product Search & Cart */}
+      <div className="flex-1 flex flex-col gap-4 overflow-hidden">
+        {/* Product Search Bar - Prominent */}
+        <Card className="flex-shrink-0">
+          <CardContent className="pt-6">
             <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground" />
               <Input
-                placeholder="Cari kode atau nama produk..."
+                placeholder="Scan barcode atau ketik nama produk..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-14 h-14 text-lg border-2 focus-visible:ring-4"
+                autoFocus
               />
             </div>
             {searchTerm && filteredProducts.length > 0 && (
-              <div className="mt-2 max-h-[200px] overflow-y-auto border rounded-lg">
+              <div className="mt-3 max-h-[250px] overflow-y-auto border-2 rounded-lg shadow-lg bg-background">
                 {filteredProducts.map((product) => (
                   <button
                     key={product.id}
                     onClick={() => addToCart(product)}
-                    className="w-full text-left p-3 hover:bg-secondary transition-colors border-b last:border-0"
+                    className="w-full text-left p-4 hover:bg-primary/10 transition-all border-b last:border-0 group"
                   >
-                    <div className="font-medium">{product.name}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {product.code} - Rp {product.price.toLocaleString("id-ID")}
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <div className="font-semibold text-lg group-hover:text-primary transition-colors">
+                          {product.name}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Kode: {product.code}
+                        </div>
+                      </div>
+                      <div className="text-xl font-bold text-primary">
+                        Rp {product.price.toLocaleString("id-ID")}
+                      </div>
                     </div>
                   </button>
                 ))}
@@ -324,113 +333,140 @@ const Cashier = () => {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Keranjang Belanja</CardTitle>
+        {/* Shopping Cart - Receipt Style */}
+        <Card className="flex-1 flex flex-col overflow-hidden">
+          <CardHeader className="flex-shrink-0 border-b bg-muted/30">
+            <CardTitle className="text-xl">Transaksi Saat Ini</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex-1 overflow-y-auto p-0">
             {cart.length === 0 ? (
-              <p className="text-center text-muted-foreground py-8">
-                Keranjang kosong
-              </p>
+              <div className="flex flex-col items-center justify-center h-full text-muted-foreground py-12">
+                <Search className="h-16 w-16 mb-4 opacity-20" />
+                <p className="text-lg">Scan produk untuk memulai transaksi</p>
+              </div>
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Produk</TableHead>
-                    <TableHead>Harga</TableHead>
-                    <TableHead className="text-center">Qty</TableHead>
-                    <TableHead className="text-right">Subtotal</TableHead>
-                    <TableHead className="w-[50px]"></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {cart.map((item) => (
-                    <TableRow key={item.product.id}>
-                      <TableCell>
+              <div className="divide-y">
+                {cart.map((item) => (
+                  <div key={item.product.id} className="p-4 hover:bg-muted/30 transition-colors">
+                    <div className="flex items-start gap-3">
+                      <div className="flex-1">
                         <Input
                           value={item.displayName}
                           onChange={(e) =>
                             updateName(item.product.id, e.target.value)
                           }
-                          className="h-8 text-sm"
+                          className="h-9 font-medium mb-2 border-muted"
                         />
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          type="number"
-                          value={item.displayPrice}
-                          onChange={(e) =>
-                            updatePrice(item.product.id, e.target.value)
-                          }
-                          className="h-8 w-24 text-sm"
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center justify-center gap-2">
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-7 w-7"
-                            onClick={() => updateQuantity(item.product.id, -1)}
-                          >
-                            <Minus className="h-3 w-3" />
-                          </Button>
-                          <span className="w-8 text-center">
-                            {item.quantity}
-                          </span>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-7 w-7"
-                            onClick={() => updateQuantity(item.product.id, 1)}
-                          >
-                            <Plus className="h-3 w-3" />
-                          </Button>
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-1">
+                            <span className="text-sm text-muted-foreground">Harga:</span>
+                            <Input
+                              type="number"
+                              value={item.displayPrice}
+                              onChange={(e) =>
+                                updatePrice(item.product.id, e.target.value)
+                              }
+                              className="h-8 w-28 text-sm"
+                            />
+                          </div>
+                          <div className="flex items-center gap-2 bg-muted/50 rounded-lg px-2 py-1">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 hover:bg-background"
+                              onClick={() => updateQuantity(item.product.id, -1)}
+                            >
+                              <Minus className="h-4 w-4" />
+                            </Button>
+                            <span className="w-10 text-center font-bold text-lg">
+                              {item.quantity}
+                            </span>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 hover:bg-background"
+                              onClick={() => updateQuantity(item.product.id, 1)}
+                            >
+                              <Plus className="h-4 w-4" />
+                            </Button>
+                          </div>
                         </div>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        Rp{" "}
-                        {(item.displayPrice * item.quantity).toLocaleString(
-                          "id-ID"
-                        )}
-                      </TableCell>
-                      <TableCell>
+                      </div>
+                      <div className="text-right flex flex-col items-end gap-2">
+                        <div className="text-xl font-bold text-primary">
+                          Rp {(item.displayPrice * item.quantity).toLocaleString("id-ID")}
+                        </div>
                         <Button
                           variant="ghost"
                           size="icon"
                           onClick={() => removeFromCart(item.product.id)}
+                          className="hover:bg-destructive/10"
                         >
-                          <Trash2 className="h-4 w-4 text-destructive" />
+                          <Trash2 className="h-5 w-5 text-destructive" />
                         </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </CardContent>
         </Card>
       </div>
 
-      <div>
-        <Card className="sticky top-20">
-          <CardHeader>
-            <CardTitle>Total Pembayaran</CardTitle>
+      {/* Right Side - Payment Panel */}
+      <div className="lg:w-[380px] flex flex-col gap-4">
+        <Card className="flex-1 flex flex-col">
+          <CardHeader className="border-b bg-muted/30">
+            <CardTitle className="text-xl">Pembayaran</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="text-3xl font-bold text-center text-primary">
-              Rp {totalAmount.toLocaleString("id-ID")}
+          <CardContent className="flex-1 flex flex-col justify-between pt-6">
+            <div className="space-y-6">
+              <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-6 border-2 border-primary/20">
+                <div className="text-sm text-muted-foreground mb-2">Total Belanja</div>
+                <div className="text-5xl font-bold text-primary tracking-tight">
+                  Rp {totalAmount.toLocaleString("id-ID")}
+                </div>
+                <div className="text-sm text-muted-foreground mt-3">
+                  {cart.length} item{cart.length !== 1 && 's'}
+                </div>
+              </div>
+
+              {cart.length > 0 && (
+                <div className="space-y-2 pt-2 border-t">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Subtotal:</span>
+                    <span className="font-medium">Rp {totalAmount.toLocaleString("id-ID")}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Pajak:</span>
+                    <span className="font-medium">Rp 0</span>
+                  </div>
+                </div>
+              )}
             </div>
-            <Button
-              className="w-full"
-              size="lg"
-              disabled={cart.length === 0}
-              onClick={() => setShowPayment(true)}
-            >
-              <Printer className="mr-2 h-5 w-5" />
-              Bayar & Cetak Struk
-            </Button>
+
+            <div className="space-y-3 mt-6">
+              <Button
+                className="w-full h-16 text-xl font-semibold"
+                size="lg"
+                disabled={cart.length === 0}
+                onClick={() => setShowPayment(true)}
+              >
+                <Printer className="mr-3 h-6 w-6" />
+                Proses Pembayaran
+              </Button>
+              {cart.length > 0 && (
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => setCart([])}
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Batal Transaksi
+                </Button>
+              )}
+            </div>
           </CardContent>
         </Card>
       </div>
