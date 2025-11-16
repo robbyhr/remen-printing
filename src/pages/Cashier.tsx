@@ -291,8 +291,9 @@ const Cashier = () => {
       <div>• Bawa Struk ini saat Penukaran</div>
     </div>
     <div class="line"></div>
-
-        <div></div>
+        <div style="height: 50px;"></div>
+        <div class="center">TANDA OWNER</div>
+    <div class="line"></div>
         <div style="height: 10px;"></div>
         <div class="center">Terima Kasih</div>
         <div class="center">Selamat Datang Kembali</div>
