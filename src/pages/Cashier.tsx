@@ -273,12 +273,14 @@ const Cashier = () => {
         </div>
         <div class="line"></div>
         
-    <div style="font-size: 8px;">
-      <div>*Garansi</div>
-      <div>*Garansi ATK 1x24 Jam setelah barang diterima</div>
-      <div>*Garansi Cetak 7x24 Jam setelah barang diterima</div>
+    <div style="font-size: 5px;">
+      <div class="center bold">KETENTUAN</div>
+      <div>Garansi ATK 1x24 Jam</div>
+      <div>Garansi Cetak 7x24 Jam</div>
+      <div>Barang rusak dapat ditukar sesuai ketentuan</div>
     </div>
-        
+
+        <div></div>
         <div class="center">Terima Kasih</div>
         <div class="center">Selamat Datang Kembali</div>
         <script>
