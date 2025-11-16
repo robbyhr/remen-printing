@@ -273,7 +273,7 @@ const Cashier = () => {
         </div>
         <div class="line"></div>
         
-    <div style="font-size: 5px;">
+    <div style="font-size: 6px;">
       <div class="center bold">KETENTUAN</div>
       <div>Garansi ATK 1x24 Jam</div>
       <div>Garansi Cetak 7x24 Jam</div>
@@ -281,7 +281,7 @@ const Cashier = () => {
     </div>
 
         <div></div>
-        <div style="height: 15px;"></div>
+        <div style="height: 10px;"></div>
         <div class="center">Terima Kasih</div>
         <div class="center">Selamat Datang Kembali</div>
         <script>
