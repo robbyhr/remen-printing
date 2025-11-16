@@ -103,7 +103,11 @@ const Cashier = () => {
   };
 
   const updatePrice = (productId: string, newPrice: string) => {
-    const price = parseFloat(newPrice) || 0;
+    const price = parseFloat(newPrice);
+    if (isNaN(price) || price <= 0) {
+      toast.error("Harga harus lebih dari 0");
+      return;
+    }
     setCart(
       cart.map((item) =>
         item.product.id === productId ? { ...item, displayPrice: price } : item
@@ -112,9 +116,14 @@ const Cashier = () => {
   };
 
   const updateName = (productId: string, newName: string) => {
+    const trimmedName = newName.trim();
+    if (trimmedName.length === 0) {
+      toast.error("Nama produk tidak boleh kosong");
+      return;
+    }
     setCart(
       cart.map((item) =>
-        item.product.id === productId ? { ...item, displayName: newName } : item
+        item.product.id === productId ? { ...item, displayName: trimmedName } : item
       )
     );
   };
