@@ -8,6 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle2, Clock, Trash2 } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface PrintingOrder {
   id: string;
@@ -132,6 +133,28 @@ const PrintingOrders = () => {
     toast({
       title: "Berhasil",
       description: currentStatus ? "Orderan dipindahkan ke proses" : "Orderan selesai",
+    });
+    fetchOrders();
+  };
+
+  const handleTogglePaid = async (orderId: string, currentStatus: boolean) => {
+    const { error } = await supabase
+      .from("printing_orders")
+      .update({ is_paid: !currentStatus })
+      .eq("id", orderId);
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Gagal mengubah status pembayaran",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Berhasil",
+      description: !currentStatus ? "Orderan sudah dibayar" : "Orderan belum dibayar",
     });
     fetchOrders();
   };
@@ -275,12 +298,15 @@ const PrintingOrders = () => {
                       <div className="text-sm text-muted-foreground space-y-1">
                         <p>Pelanggan: {order.customer_name}</p>
                         <p>No HP: {order.phone_number}</p>
-                        <p>
-                          Status Bayar:{" "}
-                          <span className={order.is_paid ? "text-green-600" : "text-red-600"}>
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            checked={order.is_paid}
+                            onCheckedChange={() => handleTogglePaid(order.id, order.is_paid)}
+                          />
+                          <span className={order.is_paid ? "text-green-600" : "text-muted-foreground"}>
                             {order.is_paid ? "Sudah Dibayar" : "Belum Dibayar"}
                           </span>
-                        </p>
+                        </div>
                         <p className="text-xs">
                           {new Date(order.created_at).toLocaleDateString("id-ID", {
                             dateStyle: "full",
