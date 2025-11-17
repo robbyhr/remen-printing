@@ -53,7 +53,7 @@ const Cashier = () => {
       .order("code", { ascending: true });
 
     if (error) {
-      toast.error("Gagal memuat produk");
+      toast.error("Failed to load products");
       console.error(error);
     } else {
       setProducts(data || []);
@@ -105,7 +105,7 @@ const Cashier = () => {
   const updatePrice = (productId: string, newPrice: string) => {
     const price = parseFloat(newPrice);
     if (isNaN(price) || price <= 0) {
-      toast.error("Harga harus lebih dari 0");
+      toast.error("Price must be greater than 0");
       return;
     }
     setCart(
@@ -118,7 +118,7 @@ const Cashier = () => {
   const updateName = (productId: string, newName: string) => {
     const trimmedName = newName.trim();
     if (trimmedName.length === 0) {
-      toast.error("Nama produk tidak boleh kosong");
+      toast.error("Product name cannot be empty");
       return;
     }
     setCart(
@@ -140,7 +140,7 @@ const Cashier = () => {
   const handlePayment = async () => {
     const payment = parseFloat(paymentAmount);
     if (!payment || payment < totalAmount) {
-      toast.error("Jumlah pembayaran tidak valid");
+      toast.error("Invalid payment amount");
       return;
     }
 
@@ -158,7 +158,7 @@ const Cashier = () => {
       .single();
 
     if (transactionError) {
-      toast.error("Gagal menyimpan transaksi");
+      toast.error("Failed to save transaction");
       console.error(transactionError);
       return;
     }
@@ -178,7 +178,7 @@ const Cashier = () => {
       .insert(items);
 
     if (itemsError) {
-      toast.error("Gagal menyimpan detail transaksi");
+      toast.error("Failed to save transaction details");
       console.error(itemsError);
       return;
     }
@@ -190,7 +190,7 @@ const Cashier = () => {
     setCart([]);
     setPaymentAmount("");
     setShowPayment(false);
-    toast.success("Transaksi berhasil");
+    toast.success("Transaction successful");
   };
 
   const printReceipt = (
@@ -273,30 +273,30 @@ const Cashier = () => {
           <span class="amount">${totalAmount.toLocaleString("id-ID")}</span>
         </div>
         <div class="row summary">
-          <span class="label">Bayar:</span>
+          <span class="label">Payment:</span>
           <span class="amount">${payment.toLocaleString("id-ID")}</span>
         </div>
         <div class="row summary">
-          <span class="label">Kembalian:</span>
+          <span class="label">Change:</span>
           <span class="amount">${change.toLocaleString("id-ID")}</span>
         </div>
         <div class="line"></div>
         
-    <div style="font-style: italic;">KETENTUAN</div>
+    <div style="font-style: italic;">TERMS & CONDITIONS</div>
     <div style="font-size: 6px;">
-      <div>• Garansi ATK 1x24 Jam</div>
-      <div>• Garansi Cetak 3x24 Jam</div>
-      <div>• Barang dapat ditukar selama garansi</div>
-      <div>• Barang tidak dapat dikembalikan</div>
-      <div>• Bawa Struk ini saat Penukaran</div>
+      <div>• Stationery Warranty 1x24 Hours</div>
+      <div>• Printing Warranty 3x24 Hours</div>
+      <div>• Items can be exchanged during warranty</div>
+      <div>• Items cannot be returned</div>
+      <div>• Bring this receipt for exchanges</div>
     </div>
     <div class="line"></div>
         <div style="height: 50px;"></div>
-        <div class="center">TANDA OWNER</div>
+        <div class="center">OWNER SIGNATURE</div>
     <div class="line"></div>
         <div style="height: 10px;"></div>
-        <div class="center">Terima Kasih</div>
-        <div class="center">Selamat Datang Kembali</div>
+        <div class="center">Thank You</div>
+        <div class="center">Welcome Back</div>
         <script>
           window.onload = function() {
             window.print();
@@ -321,7 +321,7 @@ const Cashier = () => {
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground" />
               <Input
-                placeholder="Scan barcode atau ketik nama produk..."
+                placeholder="Scan barcode or type product name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-14 h-14 text-lg border-2 focus-visible:ring-4"
@@ -342,7 +342,7 @@ const Cashier = () => {
                           {product.name}
                         </div>
                         <div className="text-sm text-muted-foreground">
-                          Kode: {product.code}
+                          Code: {product.code}
                         </div>
                       </div>
                       <div className="text-xl font-bold text-primary">
