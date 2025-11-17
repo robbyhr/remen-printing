@@ -46,7 +46,7 @@ const Products = () => {
       .order("code", { ascending: true });
 
     if (error) {
-      toast.error("Gagal memuat produk");
+      toast.error("Failed to load products");
       console.error(error);
     } else {
       setProducts(data || []);
@@ -89,10 +89,10 @@ const Products = () => {
         .eq("id", editingProduct.id);
 
       if (error) {
-        toast.error("Gagal mengupdate produk");
+        toast.error("Failed to update product");
         console.error(error);
       } else {
-        toast.success("Produk berhasil diupdate");
+        toast.success("Product updated successfully");
         fetchProducts();
         handleClose();
       }
@@ -100,10 +100,10 @@ const Products = () => {
       const { error } = await supabase.from("products").insert(productData);
 
       if (error) {
-        toast.error("Gagal menambah produk");
+        toast.error("Failed to add product");
         console.error(error);
       } else {
-        toast.success("Produk berhasil ditambahkan");
+        toast.success("Product added successfully");
         fetchProducts();
         handleClose();
       }
@@ -111,14 +111,14 @@ const Products = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Apakah Anda yakin ingin menghapus produk ini?")) {
+    if (confirm("Are you sure you want to delete this product?")) {
       const { error } = await supabase.from("products").delete().eq("id", id);
 
       if (error) {
-        toast.error("Gagal menghapus produk");
+        toast.error("Failed to delete product");
         console.error(error);
       } else {
-        toast.success("Produk berhasil dihapus");
+        toast.success("Product deleted successfully");
         fetchProducts();
       }
     }
@@ -154,13 +154,13 @@ const Products = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                {editingProduct ? "Edit Produk" : "Tambah Produk"}
+                {editingProduct ? "Edit Product" : "Add Product"}
               </DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <Label htmlFor="code">
-                  Kode Produk (kosongkan untuk auto-generate)
+                  Product Code (leave empty for auto-generate)
                 </Label>
                 <Input
                   id="code"
@@ -172,7 +172,7 @@ const Products = () => {
                 />
               </div>
               <div>
-                <Label htmlFor="name">Nama Produk *</Label>
+                <Label htmlFor="name">Product Name *</Label>
                 <Input
                   id="name"
                   value={formData.name}
@@ -183,7 +183,7 @@ const Products = () => {
                 />
               </div>
               <div>
-                <Label htmlFor="price">Harga *</Label>
+                <Label htmlFor="price">Price *</Label>
                 <Input
                   id="price"
                   type="number"
@@ -198,9 +198,9 @@ const Products = () => {
               </div>
               <div className="flex justify-end gap-2">
                 <Button type="button" variant="outline" onClick={handleClose}>
-                  Batal
+                  Cancel
                 </Button>
-                <Button type="submit">Simpan</Button>
+                <Button type="submit">Save</Button>
               </div>
             </form>
           </DialogContent>
@@ -210,10 +210,10 @@ const Products = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Kode</TableHead>
-              <TableHead>Nama Produk</TableHead>
-              <TableHead className="text-right">Harga</TableHead>
-              <TableHead className="w-[100px]">Aksi</TableHead>
+              <TableHead>Code</TableHead>
+              <TableHead>Product Name</TableHead>
+              <TableHead className="text-right">Price</TableHead>
+              <TableHead className="w-[100px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

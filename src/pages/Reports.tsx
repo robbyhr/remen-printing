@@ -44,7 +44,7 @@ const Reports = () => {
       .order("transaction_date", { ascending: false });
 
     if (error) {
-      toast.error("Gagal memuat laporan");
+      toast.error("Failed to load reports");
       console.error(error);
     } else {
       setTransactions(data || []);
@@ -52,17 +52,17 @@ const Reports = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Apakah Anda yakin ingin menghapus transaksi ini?")) {
+    if (confirm("Are you sure you want to delete this transaction?")) {
       const { error } = await supabase
         .from("transactions")
         .delete()
         .eq("id", id);
 
       if (error) {
-        toast.error("Gagal menghapus transaksi");
+        toast.error("Failed to delete transaction");
         console.error(error);
       } else {
-        toast.success("Transaksi berhasil dihapus");
+        toast.success("Transaction deleted successfully");
         fetchTransactions();
       }
     }
@@ -77,12 +77,12 @@ const Reports = () => {
     <div className="space-y-4">
       <Card>
         <CardHeader>
-          <CardTitle>Filter Tanggal</CardTitle>
+          <CardTitle>Date Filter</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-4">
             <div className="flex-1 min-w-[200px]">
-              <label className="text-sm font-medium">Dari Tanggal</label>
+              <label className="text-sm font-medium">From Date</label>
               <Input
                 type="date"
                 value={startDate}
@@ -90,7 +90,7 @@ const Reports = () => {
               />
             </div>
             <div className="flex-1 min-w-[200px]">
-              <label className="text-sm font-medium">Sampai Tanggal</label>
+              <label className="text-sm font-medium">To Date</label>
               <Input
                 type="date"
                 value={endDate}
@@ -105,7 +105,7 @@ const Reports = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-sm font-medium">
-              Total Transaksi
+              Total Transactions
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -115,7 +115,7 @@ const Reports = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-sm font-medium">
-              Total Pendapatan
+              Total Revenue
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -128,7 +128,7 @@ const Reports = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Riwayat Transaksi</CardTitle>
+          <CardTitle>Transaction History</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
@@ -174,7 +174,7 @@ const Reports = () => {
               {transactions.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center text-muted-foreground">
-                    Tidak ada transaksi
+                    No transactions
                   </TableCell>
                 </TableRow>
               )}
