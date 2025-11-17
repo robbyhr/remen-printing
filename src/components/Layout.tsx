@@ -6,10 +6,10 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
 
   const navItems = [
-    { path: "/", label: "Kasir", icon: ShoppingCart },
-    { path: "/products", label: "Produk", icon: Package },
-    { path: "/reports", label: "Laporan", icon: FileText },
-    { path: "/printing-orders", label: "Orderan Cetak", icon: Printer },
+    { path: "/", label: "Cashier", icon: ShoppingCart },
+    { path: "/products", label: "Products", icon: Package },
+    { path: "/reports", label: "Reports", icon: FileText },
+    { path: "/printing-orders", label: "Printing Orders", icon: Printer },
   ];
 
   return (

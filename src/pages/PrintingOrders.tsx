@@ -41,7 +41,7 @@ const PrintingOrders = () => {
     if (error) {
       toast({
         title: "Error",
-        description: "Gagal memuat data orderan",
+        description: "Failed to load orders",
         variant: "destructive",
       });
       return;
@@ -61,7 +61,7 @@ const PrintingOrders = () => {
     if (!trimmedName) {
       toast({
         title: "Error",
-        description: "Nama pelanggan tidak boleh kosong",
+        description: "Customer name is required",
         variant: "destructive",
       });
       return;
@@ -70,7 +70,7 @@ const PrintingOrders = () => {
     if (!trimmedPhone) {
       toast({
         title: "Error",
-        description: "Nomor HP tidak boleh kosong",
+        description: "Phone number is required",
         variant: "destructive",
       });
       return;
@@ -79,7 +79,7 @@ const PrintingOrders = () => {
     if (!trimmedOrder) {
       toast({
         title: "Error",
-        description: "Nama orderan tidak boleh kosong",
+        description: "Order name is required",
         variant: "destructive",
       });
       return;
@@ -96,15 +96,15 @@ const PrintingOrders = () => {
     if (error) {
       toast({
         title: "Error",
-        description: "Gagal menambahkan orderan",
+        description: "Failed to add order",
         variant: "destructive",
       });
       return;
     }
 
     toast({
-      title: "Berhasil",
-      description: "Orderan berhasil ditambahkan",
+      title: "Success",
+      description: "Order added successfully",
     });
 
     // Reset form
@@ -124,15 +124,15 @@ const PrintingOrders = () => {
     if (error) {
       toast({
         title: "Error",
-        description: "Gagal mengubah status orderan",
+        description: "Failed to update order status",
         variant: "destructive",
       });
       return;
     }
 
     toast({
-      title: "Berhasil",
-      description: currentStatus ? "Orderan dipindahkan ke proses" : "Orderan selesai",
+      title: "Success",
+      description: currentStatus ? "Order moved to in progress" : "Order completed",
     });
     fetchOrders();
   };
@@ -146,21 +146,21 @@ const PrintingOrders = () => {
     if (error) {
       toast({
         title: "Error",
-        description: "Gagal mengubah status pembayaran",
+        description: "Failed to update payment status",
         variant: "destructive",
       });
       return;
     }
 
     toast({
-      title: "Berhasil",
-      description: !currentStatus ? "Orderan sudah dibayar" : "Orderan belum dibayar",
+      title: "Success",
+      description: !currentStatus ? "Order marked as paid" : "Order marked as unpaid",
     });
     fetchOrders();
   };
 
   const handleDelete = async (orderId: string) => {
-    if (!confirm("Apakah Anda yakin ingin menghapus orderan ini?")) return;
+    if (!confirm("Are you sure you want to delete this order?")) return;
 
     const { error } = await supabase
       .from("printing_orders")
@@ -170,15 +170,15 @@ const PrintingOrders = () => {
     if (error) {
       toast({
         title: "Error",
-        description: "Gagal menghapus orderan",
+        description: "Failed to delete order",
         variant: "destructive",
       });
       return;
     }
 
     toast({
-      title: "Berhasil",
-      description: "Orderan berhasil dihapus",
+      title: "Success",
+      description: "Order deleted successfully",
     });
     fetchOrders();
   };
@@ -188,61 +188,61 @@ const PrintingOrders = () => {
 
   return (
     <div className="container mx-auto p-4 max-w-6xl">
-      <h1 className="text-3xl font-bold mb-6">Orderan Percetakan</h1>
+      <h1 className="text-3xl font-bold mb-6">Printing Orders</h1>
 
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         <Card>
           <CardHeader>
-            <CardTitle>Tambah Orderan Baru</CardTitle>
+            <CardTitle>Add New Order</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="customerName">Nama Pelanggan</Label>
+                <Label htmlFor="customerName">Customer Name</Label>
                 <Input
                   id="customerName"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  placeholder="Masukkan nama pelanggan"
+                  placeholder="Enter customer name"
                 />
               </div>
 
               <div>
-                <Label htmlFor="phoneNumber">Nomor HP</Label>
+                <Label htmlFor="phoneNumber">Phone Number</Label>
                 <Input
                   id="phoneNumber"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  placeholder="Masukkan nomor HP"
+                  placeholder="Enter phone number"
                 />
               </div>
 
               <div>
-                <Label htmlFor="orderName">Nama Orderan Cetak</Label>
+                <Label htmlFor="orderName">Order Name</Label>
                 <Input
                   id="orderName"
                   value={orderName}
                   onChange={(e) => setOrderName(e.target.value)}
-                  placeholder="Contoh: Banner 2x3 meter"
+                  placeholder="Example: 2x3 meter Banner"
                 />
               </div>
 
               <div>
-                <Label>Status Pembayaran</Label>
+                <Label>Payment Status</Label>
                 <RadioGroup value={isPaid} onValueChange={setIsPaid}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="true" id="paid" />
-                    <Label htmlFor="paid">Sudah Dibayar</Label>
+                    <Label htmlFor="paid">Paid</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="false" id="unpaid" />
-                    <Label htmlFor="unpaid">Belum Dibayar</Label>
+                    <Label htmlFor="unpaid">Unpaid</Label>
                   </div>
                 </RadioGroup>
               </div>
 
               <Button type="submit" className="w-full">
-                Tambah Orderan
+                Add Order
               </Button>
             </form>
           </CardContent>
@@ -250,20 +250,20 @@ const PrintingOrders = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle>Ringkasan</CardTitle>
+            <CardTitle>Summary</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-primary/10 rounded-lg">
               <div className="flex items-center gap-2">
                 <Clock className="h-5 w-5 text-primary" />
-                <span className="font-medium">Sedang Proses</span>
+                <span className="font-medium">In Progress</span>
               </div>
               <span className="text-2xl font-bold">{ongoingOrders.length}</span>
             </div>
             <div className="flex items-center justify-between p-4 bg-green-100 dark:bg-green-900/20 rounded-lg">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
-                <span className="font-medium">Selesai</span>
+                <span className="font-medium">Completed</span>
               </div>
               <span className="text-2xl font-bold">{completedOrders.length}</span>
             </div>
@@ -274,10 +274,10 @@ const PrintingOrders = () => {
       <Tabs defaultValue="ongoing" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="ongoing">
-            Sedang Proses ({ongoingOrders.length})
+            In Progress ({ongoingOrders.length})
           </TabsTrigger>
           <TabsTrigger value="completed">
-            Selesai ({completedOrders.length})
+            Completed ({completedOrders.length})
           </TabsTrigger>
         </TabsList>
 
@@ -285,7 +285,7 @@ const PrintingOrders = () => {
           {ongoingOrders.length === 0 ? (
             <Card>
               <CardContent className="pt-6 text-center text-muted-foreground">
-                Tidak ada orderan yang sedang diproses
+                No orders in progress
               </CardContent>
             </Card>
           ) : (
@@ -296,15 +296,15 @@ const PrintingOrders = () => {
                     <div className="space-y-2 flex-1">
                       <h3 className="font-semibold text-lg">{order.order_name}</h3>
                       <div className="text-sm text-muted-foreground space-y-1">
-                        <p>Pelanggan: {order.customer_name}</p>
-                        <p>No HP: {order.phone_number}</p>
+                        <p>Customer: {order.customer_name}</p>
+                        <p>Phone: {order.phone_number}</p>
                         <div className="flex items-center gap-2">
                           <Checkbox
                             checked={order.is_paid}
                             onCheckedChange={() => handleTogglePaid(order.id, order.is_paid)}
                           />
                           <span className={order.is_paid ? "text-green-600" : "text-muted-foreground"}>
-                            {order.is_paid ? "Sudah Dibayar" : "Belum Dibayar"}
+                            {order.is_paid ? "Paid" : "Unpaid"}
                           </span>
                         </div>
                         <p className="text-xs">
@@ -321,7 +321,7 @@ const PrintingOrders = () => {
                         onClick={() => handleToggleComplete(order.id, order.is_completed)}
                       >
                         <CheckCircle2 className="h-4 w-4 mr-1" />
-                        Selesai
+                        Complete
                       </Button>
                       <Button
                         variant="destructive"
@@ -342,7 +342,7 @@ const PrintingOrders = () => {
           {completedOrders.length === 0 ? (
             <Card>
               <CardContent className="pt-6 text-center text-muted-foreground">
-                Tidak ada orderan yang selesai
+                No completed orders
               </CardContent>
             </Card>
           ) : (
@@ -353,12 +353,12 @@ const PrintingOrders = () => {
                     <div className="space-y-2 flex-1">
                       <h3 className="font-semibold text-lg">{order.order_name}</h3>
                       <div className="text-sm text-muted-foreground space-y-1">
-                        <p>Pelanggan: {order.customer_name}</p>
-                        <p>No HP: {order.phone_number}</p>
+                        <p>Customer: {order.customer_name}</p>
+                        <p>Phone: {order.phone_number}</p>
                         <p>
-                          Status Bayar:{" "}
+                          Payment:{" "}
                           <span className={order.is_paid ? "text-green-600" : "text-red-600"}>
-                            {order.is_paid ? "Sudah Dibayar" : "Belum Dibayar"}
+                            {order.is_paid ? "Paid" : "Unpaid"}
                           </span>
                         </p>
                         <p className="text-xs">
@@ -375,7 +375,7 @@ const PrintingOrders = () => {
                         onClick={() => handleToggleComplete(order.id, order.is_completed)}
                       >
                         <Clock className="h-4 w-4 mr-1" />
-                        Proses Lagi
+                        Reopen
                       </Button>
                       <Button
                         variant="destructive"
