@@ -139,6 +139,30 @@ export type Database = {
         }
         Relationships: []
       }
+      withdrawals: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          withdrawal_date: string
+          withdrawal_name: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          withdrawal_date: string
+          withdrawal_name: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          withdrawal_date?: string
+          withdrawal_name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

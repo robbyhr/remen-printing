@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Package, FileText, Printer } from "lucide-react";
+import { ShoppingCart, Package, FileText, Printer, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -10,6 +10,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     { path: "/products", label: "Products", icon: Package },
     { path: "/reports", label: "Reports", icon: FileText },
     { path: "/printing-orders", label: "Printing Orders", icon: Printer },
+    { path: "/withdrawals", label: "Fund Withdrawal", icon: Wallet },
   ];
 
   return (
